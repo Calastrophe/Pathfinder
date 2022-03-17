@@ -29,10 +29,10 @@ def returnPath(nodeList, start, end):
     for node in nodeList:
         if node.nodeNum == start:
             if end in node.connections:
-                node.connections.remove(end)
-            scavengeNode(node, nodeList, end, path, used_nodes)
+                node.connections.remove(end) ## Otherwise you'll just get a singular path...
+            scavengeNodes(node, nodeList, end, path, used_nodes)
 
-def scavengeNode(node, nodeList, end, cur_path, used_nodes):
+def scavengeNodes(node, nodeList, end, cur_path, used_nodes):
     for search_node in node.connections: # Iterating over our connections to node
         if search_node not in used_nodes: # If those nodes are not in used_nodes, continue
             for obj_node in nodeList: # Finding our object
@@ -41,7 +41,7 @@ def scavengeNode(node, nodeList, end, cur_path, used_nodes):
                     if curSearch == None:
                         used_nodes.append(search_node)
                         cur_path.append(search_node)
-                        scavengeNode(obj_node, nodeList, end, cur_path, used_nodes)
+                        scavengeNodes(obj_node, nodeList, end, cur_path, used_nodes)
                     else:
                         used_nodes.append(search_node)
                         print("New path: ", curSearch)
